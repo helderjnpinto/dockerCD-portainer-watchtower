@@ -48,6 +48,27 @@ services:
       - "traefik.http.routers.edge.service=edge"
       - "traefik.http.routers.edge.tls.certresolver=leresolver"
 
+  watchtower:
+    image: containrrr/watchtower
+    restart: always
+    environment:
+     DOCKER_CONFIG: /config
+    env_file:
+     - .env
+    volumes:
+     - /var/run/docker.sock:/var/run/docker.sock
+     - ./.docker/watchtower.config.json:/config/config.json
+
+    networks:
+     - watchtower
+    command: --debug true --cleanup true
+
+    depends_on:
+     - portainer
+
+
+networks:
+  watchtower:
 
 volumes:
   portainer_data:

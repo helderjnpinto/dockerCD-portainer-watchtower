@@ -1,0 +1,7 @@
+{
+    "auths": {
+        "https://repo.treescale.com": {
+            "auth": "<base64 -> username:password>"
+        }
+    }
+}
