@@ -50,18 +50,18 @@ services:
 
   watchtower:
     image: containrrr/watchtower
-  restart: unless-stopped
-    # environment:
-    #  DOCKER_CONFIG: /config
-  env_file:
-    - ./.env
-  volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
-    - ./config.json:/config.json
+    restart: unless-stopped
+      # environment:
+      #  DOCKER_CONFIG: /config
+    env_file:
+      - ./.env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./config.json:/config.json
 
-  networks:
-    - watchtower
-  command: --debug --cleanup --trace --interval 30    
+    networks:
+      - watchtower
+    command: --debug --cleanup --trace --interval 30    
 
 
 networks:
