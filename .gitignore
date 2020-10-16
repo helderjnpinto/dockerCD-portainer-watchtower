@@ -1,4 +1,3 @@
 .docker/watchtower.config.json
 .env
 config.json
-
