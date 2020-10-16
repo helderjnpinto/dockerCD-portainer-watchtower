@@ -10,7 +10,7 @@ services:
       - --providers.docker
       - --log.level=DEBUG
       - --certificatesresolvers.leresolver.acme.httpchallenge=true
-      - --certificatesresolvers.leresolver.acme.email=your-email #Set your email address here, is for the generation of SSL certificates with Let's Encrypt. 
+      - --certificatesresolvers.leresolver.acme.email=<EMAIL HERE> #Set your email address here, is for the generation of SSL certificates with Let's Encrypt. 
       - --certificatesresolvers.leresolver.acme.storage=./acme.json
       - --certificatesresolvers.leresolver.acme.httpchallenge.entrypoint=web
     ports:
@@ -50,21 +50,16 @@ services:
 
   watchtower:
     image: containrrr/watchtower
-    restart: always
-    environment:
-     DOCKER_CONFIG: /config
+    restart: unless-stopped
     env_file:
-     - .env
+      - ./.env
     volumes:
-     - /var/run/docker.sock:/var/run/docker.sock
-     - ./.docker/watchtower.config.json:/config/config.json
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./config.json:/config.json
 
     networks:
-     - watchtower
-    command: --debug true --cleanup true
-
-    depends_on:
-     - portainer
+      - watchtower
+    command: --debug --cleanup --trace --interval 30    
 
 
 networks:
